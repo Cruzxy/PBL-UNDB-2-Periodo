@@ -22,6 +22,7 @@ def autenticarUsuario():
     return False
 
 def selecionarCategoria():
+    limparTela()
     print("Selecione uma categoria:")
     print("1. Alimento")
     print("2. Acessórios")
@@ -36,6 +37,7 @@ def selecionarCategoria():
         return None
 
 def registrarProduto():
+    limparTela()
     print("Digite as informações do produto:")
     produto = {}
     produto["nome"] = input("Nome: ")
@@ -60,6 +62,7 @@ def registrarProduto():
         produtos.append(produto)
 
 def listarProdutosPorCategoria(categoria):
+    limparTela()
     print(f"Produtos disponíveis em {categoria}:")
     indexList = {}
     counter = 1
@@ -71,12 +74,14 @@ def listarProdutosPorCategoria(categoria):
     return indexList
 
 def verificarEstoqueCategoria(categoria):
+    limparTela()
     for produto in produtos:
         if produto["categoria"] == categoria and produto["quantidade"] > 0:
             return True
     return False
 
 def comprarProduto():
+    limparTela()
     categoria = selecionarCategoria()
     if not categoria:
         return
@@ -103,6 +108,7 @@ def comprarProduto():
     print("Compra efetuada!")
 
 def verEstoque():
+    limparTela()
     totalEstoque = 0
     categoriaQuantidade = {}
 
