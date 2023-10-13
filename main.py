@@ -153,6 +153,7 @@ else:
         elif opcao == 3:
             verEstoque()
         elif opcao == 4:
+            limparTela()
             break
         else:
             print("Opção inválida!")
