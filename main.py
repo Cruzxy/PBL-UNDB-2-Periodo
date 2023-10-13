@@ -1,11 +1,11 @@
-produtos = []
+awafdhnbuidaudhsuhdsahsu
 
 MIN_ESTOQUE_ALIMENTO = 5
 MIN_ESTOQUE_ACESSORIOS = 3
 
 def limparTela():
     import os
-    os.system("clear")
+    os.system("cls")
 
 def autenticarUsuario():
     tentativas = 0
