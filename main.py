@@ -1,4 +1,4 @@
-awafdhnbuidaudhsuhdsahsu
+produtos = []
 
 MIN_ESTOQUE_ALIMENTO = 5
 MIN_ESTOQUE_ACESSORIOS = 3
