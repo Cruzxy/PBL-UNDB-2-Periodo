@@ -138,6 +138,34 @@ def verEstoque():
         elif categoria == "Acessórios" and quantidade >= MIN_ESTOQUE_ACESSORIOS:
             print("Não há necessidade de realizar um novo pedido na categoria " + categoria)
 
+def editarProduto():
+    limparTela()
+    print("Digite o nome do produto que deseja editar:")
+    nome_produto = input("Nome do produto: ")
+
+    for produto in produtos:
+        if produto["nome"] == nome_produto:
+            print(f"Produto encontrado. Categoria: {produto['categoria']}, Quantidade: {produto['quantidade']}")
+            nova_quantidade = int(input("Digite a nova quantidade: "))
+            produto["quantidade"] = nova_quantidade
+            print("Produto editado com sucesso!")
+            return
+
+    print("Produto não encontrado!")
+
+def deletarProduto():
+    limparTela()
+    print("Digite o nome do produto que deseja excluir:")
+    nome_produto = input("Nome do produto: ")
+
+    for produto in produtos:
+        if produto["nome"] == nome_produto:
+            produtos.remove(produto)
+            print("Produto excluído com sucesso!")
+            return
+
+    print("Produto não encontrado!")
+
 if not autenticarUsuario():
     print("Número máximo de tentativas atingido!")
 else:
@@ -148,7 +176,9 @@ else:
         print("1. Comprar")
         print("2. Registrar produto")
         print("3. Ver estoque")
-        print("4. Sair")
+        print("4. Editar produto")
+        print("5. Deletar produto")
+        print("6. Sair")
 
         opcao = int(input())
 
@@ -159,6 +189,10 @@ else:
         elif opcao == 3:
             verEstoque()
         elif opcao == 4:
+            editarProduto()
+        elif opcao == 5:
+            deletarProduto()
+        elif opcao == 6:
             limparTela()
             break
         else:
