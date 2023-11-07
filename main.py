@@ -25,13 +25,13 @@ def selecionarCategoria():
     limparTela()
     print("Selecione uma categoria:")
     print("1. Alimento")
-    print("2. Acessórios")
+    print("2. Acessorios")
     opcaoCategoria = int(input())
 
     if opcaoCategoria == 1:
         return "Alimento"
     elif opcaoCategoria == 2:
-        return "Acessórios"
+        return "Acessorios"
     else:
         print("Opção inválida!")
         return None
@@ -130,12 +130,12 @@ def verEstoque():
 
         if categoria == "Alimento" and quantidade < MIN_ESTOQUE_ALIMENTO:
             print("Atenção: Estoque de Alimento está abaixo do mínimo!")
-        elif categoria == "Acessórios" and quantidade < MIN_ESTOQUE_ACESSORIOS:
-            print("Atenção: Estoque de Acessórios está abaixo do mínimo!")
+        elif categoria == "Acessorios" and quantidade < MIN_ESTOQUE_ACESSORIOS:
+            print("Atenção: Estoque de Acessorios está abaixo do mínimo!")
 
         if categoria == "Alimento" and quantidade >= MIN_ESTOQUE_ALIMENTO:
             print("Não há necessidade de realizar um novo pedido na categoria " + categoria)
-        elif categoria == "Acessórios" and quantidade >= MIN_ESTOQUE_ACESSORIOS:
+        elif categoria == "Acessorios" and quantidade >= MIN_ESTOQUE_ACESSORIOS:
             print("Não há necessidade de realizar um novo pedido na categoria " + categoria)
 
 def editarProduto():
