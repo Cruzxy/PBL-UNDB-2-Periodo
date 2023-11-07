@@ -1,26 +1,66 @@
+import os
+from datetime import datetime
+
+# Lista de produtos
 produtos = []
 
+# Mínimo de estoque para alimentos e acessórios
 MIN_ESTOQUE_ALIMENTO = 5
 MIN_ESTOQUE_ACESSORIOS = 3
 
+# Função para limpar a tela
 def limparTela():
-    import os
-    os.system("cls")
+    os.system("cls" if os.name == "nt" else "clear")
 
+# Função para autenticar o usuário
 def autenticarUsuario():
     tentativas = 0
     maxTentativas = 3
+
     while tentativas < maxTentativas:
         usuario = input("Digite o usuário: ")
         senha = input("Digite a senha: ")
 
-        if usuario == "admin" and senha == "@dmiN":
+        # Verifique o banco de dados de usuários
+        if verificarUsuario(usuario, senha):
             return True
         else:
             tentativas += 1
             print(f"Usuário ou senha incorretos! Tentativa {tentativas} de {maxTentativas}")
+
+    print("Número máximo de tentativas atingido!")
     return False
 
+# Função para verificar se o usuário existe no banco de dados
+def verificarUsuario(usuario, senha):
+    with open("usuarios.txt", "r") as arquivo:
+        for linha in arquivo:
+            nome, senha_armazenada = linha.strip().split(',')
+            if usuario == nome and senha == senha_armazenada:
+                return True
+    return False
+
+# Criar o arquivo de banco de dados de usuários se ainda não existir
+def criarBancoUsuarios():
+    usuarios = [
+        ("usuario1", "senha1"),
+        ("usuario2", "senha2"),
+        ("usuario3", "senha3"),
+        ("usuario4", "senha4")
+    ]
+
+    with open("usuarios.txt", "w") as arquivo:
+        for usuario, senha in usuarios:
+            arquivo.write(f"{usuario},{senha}\n")
+
+# Verifique se o arquivo de banco de dados de usuários existe
+try:
+    with open("usuarios.txt", "r"):
+        pass
+except FileNotFoundError:
+    criarBancoUsuarios()
+
+# Função para selecionar a categoria do produto
 def selecionarCategoria():
     limparTela()
     print("Selecione uma categoria:")
@@ -36,6 +76,7 @@ def selecionarCategoria():
         print("Opção inválida!")
         return None
 
+# Função para registrar um produto
 def registrarProduto():
     limparTela()
     print("Digite as informações do produto:")
@@ -61,6 +102,7 @@ def registrarProduto():
     else:
         produtos.append(produto)
 
+# Função para listar produtos por categoria
 def listarProdutosPorCategoria(categoria):
     limparTela()
     print(f"Produtos disponíveis em {categoria}:")
@@ -73,13 +115,14 @@ def listarProdutosPorCategoria(categoria):
             counter += 1
     return indexList
 
+# Função para verificar o estoque de uma categoria
 def verificarEstoqueCategoria(categoria):
-    limparTela()
     for produto in produtos:
         if produto["categoria"] == categoria and produto["quantidade"] > 0:
             return True
     return False
 
+# Função para comprar um produto
 def comprarProduto():
     limparTela()
     categoria = selecionarCategoria()
@@ -107,6 +150,7 @@ def comprarProduto():
     produto["quantidade"] -= quantidadeCompra
     print("Compra efetuada!")
 
+# Função para verificar o estoque
 def verEstoque():
     limparTela()
     totalEstoque = 0
@@ -138,6 +182,7 @@ def verEstoque():
         elif categoria == "Acessorios" and quantidade >= MIN_ESTOQUE_ACESSORIOS:
             print("Não há necessidade de realizar um novo pedido na categoria " + categoria)
 
+# Função para editar um produto
 def editarProduto():
     limparTela()
     print("Digite o nome do produto que deseja editar:")
@@ -153,6 +198,7 @@ def editarProduto():
 
     print("Produto não encontrado!")
 
+# Função para deletar um produto
 def deletarProduto():
     limparTela()
     print("Digite o nome do produto que deseja excluir:")
@@ -166,6 +212,7 @@ def deletarProduto():
 
     print("Produto não encontrado!")
 
+# Função para exportar o relatório de estoque
 def exportarRelatorioEstoque():
     limparTela()
     print("Selecione o formato de exportação:")
@@ -181,6 +228,7 @@ def exportarRelatorioEstoque():
     else:
         print("Opção de formato inválida!")
 
+# Função para exportar o relatório em formato .txt
 def exportarParaTxt():
     with open("relatorio_estoque.txt", "w") as arquivo:
         for produto in produtos:
@@ -188,6 +236,7 @@ def exportarParaTxt():
 
     print("Relatório de estoque exportado para relatorio_estoque.txt!")
 
+# Função para exportar o relatório em formato .csv
 def exportarParaCsv():
     import csv
     with open("relatorio_estoque.csv", mode="w", newline="") as arquivo:
@@ -198,10 +247,8 @@ def exportarParaCsv():
 
     print("Relatório de estoque exportado para relatorio_estoque.csv!")
 
-
-if not autenticarUsuario():
-    print("Número máximo de tentativas atingido!")
-else:
+# Chame a função autenticarUsuario() para iniciar o sistema
+if autenticarUsuario():
     while True:
         limparTela()
 
