@@ -1,4 +1,4 @@
-# produtos = []
+produtos = []
 
 MIN_ESTOQUE_ALIMENTO = 5
 MIN_ESTOQUE_ACESSORIOS = 3
@@ -166,6 +166,39 @@ def deletarProduto():
 
     print("Produto não encontrado!")
 
+def exportarRelatorioEstoque():
+    limparTela()
+    print("Selecione o formato de exportação:")
+    print("1. Exportar para .txt")
+    print("2. Exportar para .csv")
+
+    opcaoExportacao = int(input())
+
+    if opcaoExportacao == 1:
+        exportarParaTxt()
+    elif opcaoExportacao == 2:
+        exportarParaCsv()
+    else:
+        print("Opção de formato inválida!")
+
+def exportarParaTxt():
+    with open("relatorio_estoque.txt", "w") as arquivo:
+        for produto in produtos:
+            arquivo.write(f"Nome: {produto['nome']}, Categoria: {produto['categoria']}, Quantidade: {produto['quantidade']}\n")
+
+    print("Relatório de estoque exportado para relatorio_estoque.txt!")
+
+def exportarParaCsv():
+    import csv
+    with open("relatorio_estoque.csv", mode="w", newline="") as arquivo:
+        writer = csv.writer(arquivo)
+        writer.writerow(["Nome", "Categoria", "Quantidade"])
+        for produto in produtos:
+            writer.writerow([produto['nome'], produto['categoria'], produto['quantidade']])
+
+    print("Relatório de estoque exportado para relatorio_estoque.csv!")
+
+
 if not autenticarUsuario():
     print("Número máximo de tentativas atingido!")
 else:
@@ -178,7 +211,8 @@ else:
         print("3. Ver estoque")
         print("4. Editar produto")
         print("5. Deletar produto")
-        print("6. Sair")
+        print("6. Exportar relatório de estoque")
+        print("7. Sair")
 
         opcao = int(input())
 
@@ -193,6 +227,8 @@ else:
         elif opcao == 5:
             deletarProduto()
         elif opcao == 6:
+            exportarRelatorioEstoque()
+        elif opcao == 7:
             limparTela()
             break
         else:
